@@ -8,15 +8,16 @@ import nurdanemin.inventoryservice.business.dto.responses.get.GetBrandResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateBrandResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface BrandService {
     List<GetAllBrandsResponse> getAll();
 
-    GetBrandResponse getById(int id);
+    GetBrandResponse getById(UUID id);
 
     CreateBrandResponse add(CreateBrandRequest request);
 
-    UpdateBrandResponse update(UpdateBrandRequest request);
+    UpdateBrandResponse update(UUID id, UpdateBrandRequest request);
 
-    void delete(int id);
+    void delete(UUID id);
 }

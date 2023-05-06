@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nurdanemin.commonpackage.utils.annotations.NotFutureYear;
 
 import java.util.UUID;
 
@@ -18,6 +19,8 @@ public class UpdateCarRequest {
     @NotBlank
     @NotNull
     private UUID modelId;
+    
+    @NotFutureYear
     @Min(value = 2000)
     private int modelYear;
 

@@ -8,16 +8,17 @@ import nurdanemin.inventoryservice.business.dto.responses.get.GetCarResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateCarResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CarService {
     List<GetAllCarsResponse> getAll();
 
-    GetCarResponse getById(int id);
+    GetCarResponse getById(UUID id);
 
     CreateCarResponse add(CreateCarRequest request);
 
-    UpdateCarResponse update(UpdateCarRequest request);
+    UpdateCarResponse update(UUID id, UpdateCarRequest request);
 
-    void delete(int id);
+    void delete(UUID id);
 
 }

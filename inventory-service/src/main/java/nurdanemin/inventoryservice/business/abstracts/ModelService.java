@@ -8,15 +8,16 @@ import nurdanemin.inventoryservice.business.dto.responses.get.GetModelResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateModelResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ModelService {
     List<GetAllModelsResponse> getAll();
 
-    GetModelResponse getById(int id);
+    GetModelResponse getById(UUID id);
 
     CreateModelResponse add(CreateModelRequest request);
 
-    UpdateModelResponse update(UpdateModelRequest request);
+    UpdateModelResponse update(UUID id, UpdateModelRequest request);
 
-    void delete(int id);
+    void delete(UUID id);
 }
