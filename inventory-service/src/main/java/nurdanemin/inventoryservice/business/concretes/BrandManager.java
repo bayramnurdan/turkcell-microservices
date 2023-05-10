@@ -1,6 +1,7 @@
 package nurdanemin.inventoryservice.business.concretes;
 
 import lombok.AllArgsConstructor;
+import nurdanemin.commonpackage.events.BrandDeletedEvent;
 import nurdanemin.commonpackage.utils.mappers.ModelMapperService;
 import nurdanemin.inventoryservice.business.abstracts.BrandService;
 import nurdanemin.inventoryservice.business.dto.requests.create.CreateBrandRequest;
@@ -9,6 +10,7 @@ import nurdanemin.inventoryservice.business.dto.responses.create.CreateBrandResp
 import nurdanemin.inventoryservice.business.dto.responses.get.GetAllBrandsResponse;
 import nurdanemin.inventoryservice.business.dto.responses.get.GetBrandResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateBrandResponse;
+import nurdanemin.inventoryservice.business.kafka.producer.InventoryProducer;
 import nurdanemin.inventoryservice.entities.Brand;
 import nurdanemin.inventoryservice.repository.BrandRepository;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class BrandManager implements BrandService {
     private final BrandRepository repository;
 
     private final ModelMapperService mapper;
+    private final InventoryProducer producer;
 
     @Override
     public List<GetAllBrandsResponse> getAll() {
@@ -65,6 +68,11 @@ public class BrandManager implements BrandService {
     @Override
     public void delete(UUID id) {
         repository.deleteById(id);
+        sendKafkaBrandDeletedEvent(id);
 
+    }
+
+    private void sendKafkaBrandDeletedEvent(UUID id) {
+        producer.sendMessage(new BrandDeletedEvent(id));
     }
 }
