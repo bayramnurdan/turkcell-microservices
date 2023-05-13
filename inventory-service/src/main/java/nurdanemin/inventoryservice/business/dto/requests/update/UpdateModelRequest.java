@@ -15,7 +15,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class UpdateModelRequest {
-    @NotBlank
     @NotNull
     private UUID brandId;
 

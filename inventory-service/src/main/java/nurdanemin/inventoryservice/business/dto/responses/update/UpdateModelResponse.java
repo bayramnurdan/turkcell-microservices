@@ -12,7 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateModelResponse {
-    private UUID id;
     private UUID brandId;
     private String name;
 

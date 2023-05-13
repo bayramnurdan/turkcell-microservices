@@ -1,19 +1,19 @@
 version: '3.8'
-
 services:
   kafka:
+    platform: linux/amd64
     container_name: kafka-t2
     image: bashj79/kafka-kraft
     ports:
       - "9092:9092"
     volumes:
       - kafka_data:/opt/kafka/kafka-logs
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.1.102:9092
 
   mongodb:
+    platform: linux/amd64
     container_name: turkcell2-filterdb
-    image: mongo
+    image:
+      mongo:4.4.6
     ports:
       - "27017:27017"
     volumes:

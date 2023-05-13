@@ -2,9 +2,9 @@ package nurdanemin.inventoryservice.business.kafka.producer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nurdanemin.commonpackage.events.BrandDeletedEvent;
-import nurdanemin.commonpackage.events.CarCreatedEvent;
-import nurdanemin.commonpackage.events.CarDeletedEvent;
+import nurdanemin.commonpackage.events.inventory.BrandDeletedEvent;
+import nurdanemin.commonpackage.events.inventory.CarCreatedEvent;
+import nurdanemin.commonpackage.events.inventory.CarDeletedEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -23,6 +23,7 @@ public class InventoryProducer {
                 .withPayload(event)
                 .setHeader(KafkaHeaders.TOPIC, "car-created")
                 .build();
+
         kafkaTemplate.send(message);
     }
 
@@ -32,6 +33,7 @@ public class InventoryProducer {
                 .withPayload(event)
                 .setHeader(KafkaHeaders.TOPIC, "car-deleted")
                 .build();
+
         kafkaTemplate.send(message);
     }
 
@@ -41,6 +43,7 @@ public class InventoryProducer {
                 .withPayload(event)
                 .setHeader(KafkaHeaders.TOPIC, "brand-deleted")
                 .build();
+
         kafkaTemplate.send(message);
     }
 

@@ -1,6 +1,8 @@
 package nurdanemin.inventoryservice.business.rules;
 
 import lombok.AllArgsConstructor;
+import nurdanemin.commonpackage.utils.exceptions.BusinessException;
+import nurdanemin.inventoryservice.entities.enums.State;
 import nurdanemin.inventoryservice.repository.CarRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,16 @@ public class CarBusinessRules {
 
     public void checkIfCarExists(UUID id) {
         if (!repository.existsById(id)) {
-            // TODO Runtime Exception
-            throw new RuntimeException("CAR_NOT_EXISTS");
+            throw new BusinessException("CAR_NOT_EXISTS");
 
         }
+    }
+
+    public void checkCarAvailability(UUID id) {
+        var car = repository.findById(id).orElseThrow();
+        if (!car.getState().equals(State.Available)) {
+            throw new BusinessException("CAR_NOT_AVAILABLE");
+        }
+
     }
 }

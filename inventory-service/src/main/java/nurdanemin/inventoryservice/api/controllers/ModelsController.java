@@ -39,7 +39,7 @@ public class ModelsController {
     }
 
     @PutMapping("/{id}")
-    public UpdateModelResponse update(@PathVariable UUID id, @RequestBody UpdateModelRequest request) {
+    public UpdateModelResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateModelRequest request) {
         return service.update(id, request);
     }
 

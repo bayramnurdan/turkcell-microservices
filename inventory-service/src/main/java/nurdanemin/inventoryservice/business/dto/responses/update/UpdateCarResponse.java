@@ -13,7 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateCarResponse {
-    private UUID id;
     private UUID modelId;
     private int modelYear;
     private String plate;

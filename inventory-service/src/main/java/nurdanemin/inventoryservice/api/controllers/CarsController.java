@@ -39,7 +39,7 @@ public class CarsController {
     }
 
     @PutMapping("/{id}")
-    public UpdateCarResponse update(@PathVariable UUID id, @RequestBody UpdateCarRequest request) {
+    public UpdateCarResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateCarRequest request) {
         return service.update(id, request);
     }
 
@@ -49,4 +49,9 @@ public class CarsController {
         service.delete(id);
     }
 
+
+    @GetMapping("api/cars/check-car-available/{id}")
+    public void checkIfCarAvailable(@PathVariable UUID id) {
+        service.checkIfCarAvailable(id);
+    }
 }

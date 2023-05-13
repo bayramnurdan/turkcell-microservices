@@ -6,6 +6,7 @@ import nurdanemin.inventoryservice.business.dto.responses.create.CreateCarRespon
 import nurdanemin.inventoryservice.business.dto.responses.get.GetAllCarsResponse;
 import nurdanemin.inventoryservice.business.dto.responses.get.GetCarResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateCarResponse;
+import nurdanemin.inventoryservice.entities.enums.State;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,5 +21,10 @@ public interface CarService {
     UpdateCarResponse update(UUID id, UpdateCarRequest request);
 
     void delete(UUID id);
+
+    void checkIfCarAvailable(UUID id);
+
+    void changeStateByCarId(State state, UUID id);
+
 
 }

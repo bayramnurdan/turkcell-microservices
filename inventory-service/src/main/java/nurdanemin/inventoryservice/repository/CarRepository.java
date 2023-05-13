@@ -1,9 +1,17 @@
 package nurdanemin.inventoryservice.repository;
 
+import jakarta.transaction.Transactional;
 import nurdanemin.inventoryservice.entities.Car;
+import nurdanemin.inventoryservice.entities.enums.State;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.UUID;
 
 public interface CarRepository extends JpaRepository<Car, UUID> {
+    @Modifying
+    @Transactional  // İŞLEM SIRASINDA HATA OLURSA İŞLEM İPTAL
+    @Query(value = "update Car set state =:state where id =:id")
+    void changeStateByCarId(State state, UUID id);
 }

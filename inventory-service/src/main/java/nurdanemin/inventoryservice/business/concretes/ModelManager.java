@@ -9,6 +9,7 @@ import nurdanemin.inventoryservice.business.dto.responses.create.CreateModelResp
 import nurdanemin.inventoryservice.business.dto.responses.get.GetAllModelsResponse;
 import nurdanemin.inventoryservice.business.dto.responses.get.GetModelResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateModelResponse;
+import nurdanemin.inventoryservice.business.rules.ModelBusinessRules;
 import nurdanemin.inventoryservice.entities.Model;
 import nurdanemin.inventoryservice.repository.ModelRepository;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class ModelManager implements ModelService {
     private ModelRepository repository;
     private final ModelMapperService mapper;
+    private final ModelBusinessRules rules;
 
 
     @Override
@@ -35,6 +37,7 @@ public class ModelManager implements ModelService {
 
     @Override
     public GetModelResponse getById(UUID id) {
+        rules.checkIfModelExists(id);
         var Model = repository.findById(id).orElseThrow();
         var response = mapper.forResponse().map(Model, GetModelResponse.class);
         return response;
@@ -52,6 +55,7 @@ public class ModelManager implements ModelService {
 
     @Override
     public UpdateModelResponse update(UUID id, UpdateModelRequest request) {
+        rules.checkIfModelExists(id);
         var model = mapper.forRequest().map(request, Model.class);
         model.setId(id);
         repository.save(model);
@@ -61,6 +65,7 @@ public class ModelManager implements ModelService {
 
     @Override
     public void delete(UUID id) {
+        rules.checkIfModelExists(id);
         repository.deleteById(id);
     }
 }

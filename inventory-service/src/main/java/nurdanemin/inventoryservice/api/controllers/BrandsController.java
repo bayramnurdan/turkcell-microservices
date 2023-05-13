@@ -39,7 +39,7 @@ public class BrandsController {
     }
 
     @PutMapping("/{id}")
-    public UpdateBrandResponse update(@PathVariable UUID id, @RequestBody UpdateBrandRequest request) {
+    public UpdateBrandResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateBrandRequest request) {
         return service.update(id, request);
     }
 

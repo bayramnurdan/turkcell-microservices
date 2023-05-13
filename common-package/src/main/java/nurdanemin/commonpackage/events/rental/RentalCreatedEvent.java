@@ -1,4 +1,4 @@
-package nurdanemin.commonpackage.events;
+package nurdanemin.commonpackage.events.rental;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BrandDeletedEvent {
-    private UUID brandId;
+public class RentalCreatedEvent {
+    private UUID carId;
 }

@@ -1,8 +1,8 @@
 package nurdanemin.inventoryservice.business.concretes;
 
 import lombok.AllArgsConstructor;
-import nurdanemin.commonpackage.events.CarCreatedEvent;
-import nurdanemin.commonpackage.events.CarDeletedEvent;
+import nurdanemin.commonpackage.events.inventory.CarCreatedEvent;
+import nurdanemin.commonpackage.events.inventory.CarDeletedEvent;
 import nurdanemin.commonpackage.utils.mappers.ModelMapperService;
 import nurdanemin.inventoryservice.business.abstracts.CarService;
 import nurdanemin.inventoryservice.business.dto.requests.create.CreateCarRequest;
@@ -12,6 +12,7 @@ import nurdanemin.inventoryservice.business.dto.responses.get.GetAllCarsResponse
 import nurdanemin.inventoryservice.business.dto.responses.get.GetCarResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateCarResponse;
 import nurdanemin.inventoryservice.business.kafka.producer.InventoryProducer;
+import nurdanemin.inventoryservice.business.rules.CarBusinessRules;
 import nurdanemin.inventoryservice.entities.Car;
 import nurdanemin.inventoryservice.entities.enums.State;
 import nurdanemin.inventoryservice.repository.CarRepository;
@@ -26,6 +27,7 @@ public class CarManager implements CarService {
     private final CarRepository repository;
     private final ModelMapperService mapper;
     private final InventoryProducer producer;
+    private final CarBusinessRules rules;
 
     @Override
     public List<GetAllCarsResponse> getAll() {
@@ -39,6 +41,7 @@ public class CarManager implements CarService {
 
     @Override
     public GetCarResponse getById(UUID id) {
+        rules.checkIfCarExists(id);
         var car = repository.findById(id).orElseThrow();
         var response = mapper.forResponse().map(car, GetCarResponse.class);
         return response;
@@ -59,6 +62,7 @@ public class CarManager implements CarService {
 
     @Override
     public UpdateCarResponse update(UUID id, UpdateCarRequest request) {
+        rules.checkIfCarExists(id);
         var car = mapper.forRequest().map(request, Car.class);
         car.setId(id);
         repository.save(car);
@@ -68,8 +72,22 @@ public class CarManager implements CarService {
 
     @Override
     public void delete(UUID id) {
+        rules.checkIfCarExists(id);
         repository.deleteById(id);
         sendKafkaCarDeletedEvent(id);
+    }
+
+    @Override
+    public void checkIfCarAvailable(UUID id) {
+        rules.checkIfCarExists(id);
+        rules.checkCarAvailability(id);
+
+    }
+
+    @Override
+    public void changeStateByCarId(State state, UUID id) {
+        repository.changeStateByCarId(state, id);
+
     }
 
     private void sendKafkaCarCreatedEvent(Car createdCar) {
