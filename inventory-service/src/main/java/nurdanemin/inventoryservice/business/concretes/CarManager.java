@@ -99,4 +99,6 @@ public class CarManager implements CarService {
     private void sendKafkaCarDeletedEvent(UUID id) {
         producer.sendMessage(new CarDeletedEvent(id));
     }
+
+
 }
