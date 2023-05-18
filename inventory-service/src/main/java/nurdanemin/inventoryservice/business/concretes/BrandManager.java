@@ -2,6 +2,7 @@ package nurdanemin.inventoryservice.business.concretes;
 
 import lombok.AllArgsConstructor;
 import nurdanemin.commonpackage.events.inventory.BrandDeletedEvent;
+import nurdanemin.commonpackage.kafka.producer.KafkaProducer;
 import nurdanemin.commonpackage.utils.mappers.ModelMapperService;
 import nurdanemin.inventoryservice.business.abstracts.BrandService;
 import nurdanemin.inventoryservice.business.dto.requests.create.CreateBrandRequest;
@@ -10,7 +11,6 @@ import nurdanemin.inventoryservice.business.dto.responses.create.CreateBrandResp
 import nurdanemin.inventoryservice.business.dto.responses.get.GetAllBrandsResponse;
 import nurdanemin.inventoryservice.business.dto.responses.get.GetBrandResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateBrandResponse;
-import nurdanemin.inventoryservice.business.kafka.producer.InventoryProducer;
 import nurdanemin.inventoryservice.business.rules.BrandBusinessRules;
 import nurdanemin.inventoryservice.entities.Brand;
 import nurdanemin.inventoryservice.repository.BrandRepository;
@@ -25,7 +25,7 @@ public class BrandManager implements BrandService {
     private final BrandRepository repository;
     private final BrandBusinessRules rules;
     private final ModelMapperService mapper;
-    private final InventoryProducer producer;
+    private final KafkaProducer producer;
 
     @Override
     public List<GetAllBrandsResponse> getAll() {
@@ -75,6 +75,7 @@ public class BrandManager implements BrandService {
     }
 
     private void sendKafkaBrandDeletedEvent(UUID id) {
-        producer.sendMessage(new BrandDeletedEvent(id));
+
+        producer.sendMessage(new BrandDeletedEvent(id), "brand-deleted");
     }
 }

@@ -1,5 +1,6 @@
 package nurdanemin.inventoryservice.business.abstracts;
 
+import nurdanemin.commonpackage.utils.dto.ClientResponse;
 import nurdanemin.inventoryservice.business.dto.requests.create.CreateCarRequest;
 import nurdanemin.inventoryservice.business.dto.requests.update.UpdateCarRequest;
 import nurdanemin.inventoryservice.business.dto.responses.create.CreateCarResponse;
@@ -22,7 +23,7 @@ public interface CarService {
 
     void delete(UUID id);
 
-    void checkIfCarAvailable(UUID id);
+    ClientResponse checkIfCarAvailable(UUID id);
 
     void changeStateByCarId(State state, UUID id);
 

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nurdanemin.commonpackage.events.Event;
 
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CarCreatedEvent {
+public class CarCreatedEvent implements Event {
     private UUID carId;
     private UUID modelId;
     private UUID brandId;

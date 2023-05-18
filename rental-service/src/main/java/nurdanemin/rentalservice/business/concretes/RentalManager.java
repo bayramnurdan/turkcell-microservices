@@ -1,6 +1,9 @@
 package nurdanemin.rentalservice.business.concretes;
 
 import lombok.AllArgsConstructor;
+import nurdanemin.commonpackage.events.rental.RentalCreatedEvent;
+import nurdanemin.commonpackage.events.rental.RentalDeletedEvent;
+import nurdanemin.commonpackage.kafka.producer.KafkaProducer;
 import nurdanemin.commonpackage.utils.mappers.ModelMapperService;
 import nurdanemin.rentalservice.business.abstracts.RentalService;
 import nurdanemin.rentalservice.business.dto.requests.CreateRentalRequest;
@@ -24,6 +27,7 @@ public class RentalManager implements RentalService {
     private final RentalRepository repository;
     private final ModelMapperService mapper;
     private final RentalBusinessRules rules;
+    private final KafkaProducer producer;
 
 
     @Override
@@ -48,14 +52,21 @@ public class RentalManager implements RentalService {
 
     @Override
     public CreateRentalResponse add(CreateRentalRequest request) {
+        rules.ensureCarIsAvailable(request.getCarId());
         var rental = mapper.forRequest().map(request, Rental.class);
         rental.setId(null);
         rental.setTotalPrice(getTotalPrice(rental));
         rental.setRentedAt(LocalDate.now());
         repository.save(rental);
+        sendKafkaRentalCreatedEvent(request.getCarId());
         var response = mapper.forResponse().map(rental, CreateRentalResponse.class);
 
         return response;
+    }
+
+    public void sendKafkaRentalCreatedEvent(UUID carId) {
+
+        producer.sendMessage(new RentalCreatedEvent(carId), "rental-created");
     }
 
     @Override
@@ -72,10 +83,16 @@ public class RentalManager implements RentalService {
     @Override
     public void delete(UUID id) {
         rules.checkIfRentalExists(id);
+        sendKafkaRentalDeletedEvent(id);
         repository.deleteById(id);
     }
 
     private double getTotalPrice(Rental rental) {
         return rental.getDailyPrice() * rental.getRentedForDays();
+    }
+
+    private void sendKafkaRentalDeletedEvent(UUID id) {
+        var carId = repository.findById(id).orElseThrow().getCarId();
+        producer.sendMessage(new RentalDeletedEvent(carId), "rental-deleted");
     }
 }

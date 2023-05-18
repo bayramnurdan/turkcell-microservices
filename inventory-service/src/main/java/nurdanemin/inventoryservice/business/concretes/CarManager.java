@@ -3,6 +3,9 @@ package nurdanemin.inventoryservice.business.concretes;
 import lombok.AllArgsConstructor;
 import nurdanemin.commonpackage.events.inventory.CarCreatedEvent;
 import nurdanemin.commonpackage.events.inventory.CarDeletedEvent;
+import nurdanemin.commonpackage.kafka.producer.KafkaProducer;
+import nurdanemin.commonpackage.utils.dto.ClientResponse;
+import nurdanemin.commonpackage.utils.exceptions.BusinessException;
 import nurdanemin.commonpackage.utils.mappers.ModelMapperService;
 import nurdanemin.inventoryservice.business.abstracts.CarService;
 import nurdanemin.inventoryservice.business.dto.requests.create.CreateCarRequest;
@@ -11,7 +14,6 @@ import nurdanemin.inventoryservice.business.dto.responses.create.CreateCarRespon
 import nurdanemin.inventoryservice.business.dto.responses.get.GetAllCarsResponse;
 import nurdanemin.inventoryservice.business.dto.responses.get.GetCarResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateCarResponse;
-import nurdanemin.inventoryservice.business.kafka.producer.InventoryProducer;
 import nurdanemin.inventoryservice.business.rules.CarBusinessRules;
 import nurdanemin.inventoryservice.entities.Car;
 import nurdanemin.inventoryservice.entities.enums.State;
@@ -26,7 +28,7 @@ import java.util.UUID;
 public class CarManager implements CarService {
     private final CarRepository repository;
     private final ModelMapperService mapper;
-    private final InventoryProducer producer;
+    private final KafkaProducer producer;
     private final CarBusinessRules rules;
 
     @Override
@@ -78,9 +80,11 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public void checkIfCarAvailable(UUID id) {
-        rules.checkIfCarExists(id);
-        rules.checkCarAvailability(id);
+    public ClientResponse checkIfCarAvailable(UUID id) {
+        var response = new ClientResponse();
+        validateCarAvailability(id, response);
+
+        return response;
 
     }
 
@@ -92,12 +96,24 @@ public class CarManager implements CarService {
 
     private void sendKafkaCarCreatedEvent(Car createdCar) {
         var event = mapper.forResponse().map(createdCar, CarCreatedEvent.class);
-        producer.sendMessage(event);
+        producer.sendMessage(event, "car-created");
 
     }
 
     private void sendKafkaCarDeletedEvent(UUID id) {
-        producer.sendMessage(new CarDeletedEvent(id));
+
+        producer.sendMessage(new CarDeletedEvent(id), "car-deleted");
+    }
+
+    private void validateCarAvailability(UUID id, ClientResponse response) {
+        try {
+            rules.checkIfCarExists(id);
+            rules.checkCarAvailability(id);
+            response.setSuccess(true);
+        } catch (BusinessException exception) {
+            response.setSuccess(false);
+            response.setMessage(exception.getMessage());
+        }
     }
 
 

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nurdanemin.commonpackage.events.Event;
 
 import java.util.UUID;
 
@@ -11,6 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BrandDeletedEvent {
+public class BrandDeletedEvent implements Event {
     private UUID brandId;
 }

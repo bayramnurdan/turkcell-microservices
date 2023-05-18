@@ -27,7 +27,7 @@ public class ModelManager implements ModelService {
 
     @Override
     public List<GetAllModelsResponse> getAll() {
-        var models = repository.findAll();  //var sağa bakıyor, sade gözükmesi için
+        var models = repository.findAll();
         var response = models
                 .stream()
                 .map(model -> mapper.forResponse().map(model, GetAllModelsResponse.class))
@@ -48,7 +48,6 @@ public class ModelManager implements ModelService {
         var model = mapper.forRequest().map(request, Model.class);
         model.setId(null);
         repository.save(model);
-
         var response = mapper.forResponse().map(model, CreateModelResponse.class);
         return response;
     }

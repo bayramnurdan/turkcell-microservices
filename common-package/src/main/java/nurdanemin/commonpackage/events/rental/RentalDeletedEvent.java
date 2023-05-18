@@ -1,4 +1,4 @@
-package nurdanemin.commonpackage.events.inventory;
+package nurdanemin.commonpackage.events.rental;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CarDeletedEvent implements Event {
+public class RentalDeletedEvent implements Event {
     private UUID carId;
-
 }

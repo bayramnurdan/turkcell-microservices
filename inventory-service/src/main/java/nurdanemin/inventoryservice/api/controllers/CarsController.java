@@ -2,6 +2,7 @@ package nurdanemin.inventoryservice.api.controllers;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import nurdanemin.commonpackage.utils.dto.ClientResponse;
 import nurdanemin.inventoryservice.business.abstracts.CarService;
 import nurdanemin.inventoryservice.business.dto.requests.create.CreateCarRequest;
 import nurdanemin.inventoryservice.business.dto.requests.update.UpdateCarRequest;
@@ -50,8 +51,9 @@ public class CarsController {
     }
 
 
-    @GetMapping("api/cars/check-car-available/{id}")
-    public void checkIfCarAvailable(@PathVariable UUID id) {
-        service.checkIfCarAvailable(id);
+    @GetMapping("/check-car-available/{id}")
+    public ClientResponse checkIfCarAvailable(@PathVariable UUID id) {
+
+        return service.checkIfCarAvailable(id);
     }
 }

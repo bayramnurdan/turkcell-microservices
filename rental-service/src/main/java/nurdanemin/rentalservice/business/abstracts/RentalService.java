@@ -20,4 +20,6 @@ public interface RentalService {
     UpdateRentalResponse update(UUID id, UpdateRentalRequest request);
 
     void delete(UUID id);
+
+    void sendKafkaRentalCreatedEvent(UUID carId);
 }
