@@ -35,9 +35,9 @@ public class MaintenancesController {
         return service.add(request);
     }
 
-    @PutMapping("/{carId}")
+    @PutMapping("/return}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void returnCarFromMaintenance(@PathVariable UUID carId) {
+    public void returnCarFromMaintenance(@RequestParam UUID carId) {
         service.returnCarFromMaintenance(carId);
     }
 
