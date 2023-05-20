@@ -16,7 +16,5 @@ public class CarClientFallback implements CarClient {
         throw new BusinessException(("INVENTORY_SERVICE_IS_NOT_AVAILABLE_NOW"));
     }
 
-    public String carAvailibilityNotKnown() {
-        return "CAR_AVAILABILITY_NOT_KNOWN_TRY_ANOTHER";
-    }
+
 }
