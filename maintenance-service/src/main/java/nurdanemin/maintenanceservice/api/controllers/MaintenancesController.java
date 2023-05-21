@@ -35,7 +35,7 @@ public class MaintenancesController {
         return service.add(request);
     }
 
-    @PutMapping("/return}")
+    @PutMapping("/return")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void returnCarFromMaintenance(@RequestParam UUID carId) {
         service.returnCarFromMaintenance(carId);

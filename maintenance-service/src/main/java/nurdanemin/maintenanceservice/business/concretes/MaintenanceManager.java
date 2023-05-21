@@ -46,7 +46,7 @@ public class MaintenanceManager implements MaintenanceService {
 
     @Override
     public void returnCarFromMaintenance(UUID carId) {
-        rules.checkIfMaintenanceExists(carId);
+        rules.checkIfActiveMaintenanceExists(carId);
         var maintenance = repository.findByCarId(carId);
         maintenance.setCompleted(true);
         maintenance.setEndDate(LocalDateTime.now());

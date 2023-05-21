@@ -16,14 +16,14 @@ public class MaintenanceRules {
     private final CarClientForMaintenance carClientForMaintenance;
 
 
-    public void checkIfMaintenanceExistsByCarId(UUID carId) {
-        if (!repository.existsByCarId(carId)) {
-            throw new BusinessException("MAINTENANCE_FOR_CAR_NOT_EXISTS");
+    public void checkIfActiveMaintenanceExists(UUID carId) {
+        if (!repository.existsByCarIdAndIsCompletedIsFalse(carId)) {
+            throw new BusinessException("ACTIVE_MAINTENANCE_FOR_CAR_NOT_EXISTS");
         }
     }
 
     public void checkIfMaintenanceExists(UUID id) {
-        if (!repository.existsByCarId(id)) {
+        if (!repository.existsById(id)) {
             throw new BusinessException("MAINTENANCE_NOT_EXISTS");
         }
     }

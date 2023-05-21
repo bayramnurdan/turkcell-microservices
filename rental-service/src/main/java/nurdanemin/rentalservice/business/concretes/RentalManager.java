@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import nurdanemin.commonpackage.events.rental.RentalCreatedEvent;
 import nurdanemin.commonpackage.events.rental.RentalDeletedEvent;
 import nurdanemin.commonpackage.kafka.producer.KafkaProducer;
+import nurdanemin.commonpackage.utils.dto.CreateRentalPaymentRequest;
 import nurdanemin.commonpackage.utils.mappers.ModelMapperService;
+import nurdanemin.rentalservice.api.clients.PayClient;
 import nurdanemin.rentalservice.business.abstracts.RentalService;
 import nurdanemin.rentalservice.business.dto.requests.CreateRentalRequest;
 import nurdanemin.rentalservice.business.dto.requests.UpdateRentalRequest;
@@ -28,6 +30,7 @@ public class RentalManager implements RentalService {
     private final ModelMapperService mapper;
     private final RentalBusinessRules rules;
     private final KafkaProducer producer;
+    private final PayClient payClient;
 
 
     @Override
@@ -57,6 +60,9 @@ public class RentalManager implements RentalService {
         rental.setId(null);
         rental.setTotalPrice(getTotalPrice(rental));
         rental.setRentedAt(LocalDate.now());
+        var paymentrequest = mapper.forResponse().map(request.getPaymentRequest(), CreateRentalPaymentRequest.class);
+        paymentrequest.setPrice(getTotalPrice(rental));
+        payClient.pay(paymentrequest);
         repository.save(rental);
         sendKafkaRentalCreatedEvent(request.getCarId());
         var response = mapper.forResponse().map(rental, CreateRentalResponse.class);

@@ -1,7 +1,6 @@
 version: '3.8'
 services:
   kafka:
-    restart: always
     platform: linux/amd64
     container_name: kafka-t2
     image: bashj79/kafka-kraft
@@ -11,7 +10,6 @@ services:
       - kafka_data:/opt/kafka/kafka-logs
 
   mongodb:
-    restart: always
     platform: linux/amd64
     container_name: turkcell2-filterdb
     image:

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nurdanemin.commonpackage.events.Event;
+import nurdanemin.commonpackage.utils.dto.PaymentRequest;
 
 import java.util.UUID;
 
@@ -21,5 +22,6 @@ public class CreateRentalRequest implements Event {
     private double dailyPrice;
     @Min(1)
     private int rentedForDays;
+    private PaymentRequest paymentRequest;
 }
 
