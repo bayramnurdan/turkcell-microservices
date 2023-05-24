@@ -21,6 +21,7 @@ public class RentalBusinessRules {
         }
     }
 
+
     public void ensureCarIsAvailable(UUID carId) {
         ClientResponse response = carClient.checkIfCarAvailable(carId);
         if (!response.isSuccess()) {

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nurdanemin.commonpackage.events.maintenance.ReturnMaintenanceEvent;
 import nurdanemin.commonpackage.events.rental.RentalCreatedEvent;
+import nurdanemin.commonpackage.events.rental.RentalDeletedEvent;
 import nurdanemin.filterservice.business.abstracts.FilterService;
 import nurdanemin.filterservice.entities.Filter;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -27,6 +28,18 @@ public class RentalConsumer {
     }
 
     @KafkaListener(
+            topics = "rental-deleted",
+            groupId = "filter-rental-delete"
+    )
+    public void consume(RentalDeletedEvent event) {
+        var filter = service.getByCarId(event.getCarId());
+        filter.setState("Available");
+        service.add(filter);
+        log.info("Rental delete  event consumed  {}", event);
+    }
+
+
+    @KafkaListener(
             topics = "return-maintenance",
             groupId = "filter-maintenance-return"
     )
@@ -34,6 +47,6 @@ public class RentalConsumer {
         var filter = service.getByCarId(event.getCarId());
         filter.setState("Available");
         service.add(filter);
-        log.info("Rental deleted event consumed {}", event);
+        log.info("Maintenance return event consumed {}", event);
     }
 }

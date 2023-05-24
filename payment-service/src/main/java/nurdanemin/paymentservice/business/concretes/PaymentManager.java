@@ -73,7 +73,7 @@ public class PaymentManager implements PaymentService {
         try {
             rules.checkIfPaymentIsValid(request);
             rules.checkIfBalanceIdEnough(payment.getBalance(), request.getPrice());
-            posService.pay(); // fake pos service
+            posService.pay();
             payment.setBalance(payment.getBalance() - request.getPrice());
             repository.save(payment);
             response.setSuccess(true);
@@ -92,7 +92,5 @@ public class PaymentManager implements PaymentService {
     public ClientResponse processRentalPayment(CreateRentalPaymentRequest request) {
         Payment payment = repository.findByCardNumber(request.getCardNumber());
         return pay(request, payment);
-
-
     }
 }

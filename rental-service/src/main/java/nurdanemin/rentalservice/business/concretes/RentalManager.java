@@ -81,10 +81,10 @@ public class RentalManager implements RentalService {
         var rental = mapper.forRequest().map(request, Rental.class);
         rental.setId(id);
         repository.save(rental);
-        var response = mapper.forResponse().map(rental, UpdateRentalResponse.class);
+        return mapper.forResponse().map(rental, UpdateRentalResponse.class);
 
-        return response;
     }
+
 
     @Override
     public void delete(UUID id) {
