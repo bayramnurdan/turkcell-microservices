@@ -17,7 +17,7 @@ public class MaintenanceRules {
 
 
     public void checkIfActiveMaintenanceExists(UUID carId) {
-        if (!repository.existsByCarIdAndIsCompletedIsFalse(carId)) {
+        if (!repository.existsByCarIdAndCompletedIsFalse(carId)) {
             throw new BusinessException("ACTIVE_MAINTENANCE_FOR_CAR_NOT_EXISTS");
         }
     }

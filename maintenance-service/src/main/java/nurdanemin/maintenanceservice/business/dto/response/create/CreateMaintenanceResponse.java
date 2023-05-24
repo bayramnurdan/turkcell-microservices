@@ -15,7 +15,7 @@ import java.util.UUID;
 public class CreateMaintenanceResponse {
     private UUID id;
     private String information;
-    private boolean isCompleted;
+    private boolean completed;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private UUID carId;

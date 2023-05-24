@@ -21,7 +21,7 @@ public class Maintenance {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String information;
-    private boolean isCompleted;
+    private boolean completed;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private UUID carId;
