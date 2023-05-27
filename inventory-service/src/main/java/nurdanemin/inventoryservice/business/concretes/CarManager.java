@@ -5,6 +5,7 @@ import nurdanemin.commonpackage.events.inventory.CarCreatedEvent;
 import nurdanemin.commonpackage.events.inventory.CarDeletedEvent;
 import nurdanemin.commonpackage.kafka.producer.KafkaProducer;
 import nurdanemin.commonpackage.utils.dto.ClientResponse;
+import nurdanemin.commonpackage.utils.dto.GetCarResponse;
 import nurdanemin.commonpackage.utils.exceptions.BusinessException;
 import nurdanemin.commonpackage.utils.mappers.ModelMapperService;
 import nurdanemin.inventoryservice.business.abstracts.CarService;
@@ -12,7 +13,6 @@ import nurdanemin.inventoryservice.business.dto.requests.create.CreateCarRequest
 import nurdanemin.inventoryservice.business.dto.requests.update.UpdateCarRequest;
 import nurdanemin.inventoryservice.business.dto.responses.create.CreateCarResponse;
 import nurdanemin.inventoryservice.business.dto.responses.get.GetAllCarsResponse;
-import nurdanemin.inventoryservice.business.dto.responses.get.GetCarResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateCarResponse;
 import nurdanemin.inventoryservice.business.rules.CarBusinessRules;
 import nurdanemin.inventoryservice.entities.Car;

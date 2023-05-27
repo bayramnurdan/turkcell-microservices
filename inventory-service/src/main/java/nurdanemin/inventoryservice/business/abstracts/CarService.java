@@ -1,11 +1,11 @@
 package nurdanemin.inventoryservice.business.abstracts;
 
 import nurdanemin.commonpackage.utils.dto.ClientResponse;
+import nurdanemin.commonpackage.utils.dto.GetCarResponse;
 import nurdanemin.inventoryservice.business.dto.requests.create.CreateCarRequest;
 import nurdanemin.inventoryservice.business.dto.requests.update.UpdateCarRequest;
 import nurdanemin.inventoryservice.business.dto.responses.create.CreateCarResponse;
 import nurdanemin.inventoryservice.business.dto.responses.get.GetAllCarsResponse;
-import nurdanemin.inventoryservice.business.dto.responses.get.GetCarResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateCarResponse;
 import nurdanemin.inventoryservice.entities.enums.State;
 

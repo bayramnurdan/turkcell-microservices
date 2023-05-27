@@ -1,10 +1,9 @@
-package nurdanemin.inventoryservice.business.dto.responses.get;
+package nurdanemin.commonpackage.utils.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nurdanemin.inventoryservice.entities.enums.State;
 
 import java.util.UUID;
 
@@ -17,7 +16,8 @@ public class GetCarResponse {
     private UUID modelId;
     private int modelYear;
     private String plate;
-    private State state;
     private double dailyPrice;
+    private String modelName;
+    private String modelBrandName;
 
 }

@@ -9,28 +9,18 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>nurdanemin</groupId>
-    <artifactId>rental-service</artifactId>
+    <artifactId>invoice-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rental-service</name>
-    <description>rental-service</description>
+    <name>invoice-service</name>
+    <description>service</description>
     <properties>
         <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <version>3.0.6</version>
         </dependency>
 
         <dependency>
@@ -38,19 +28,13 @@
             <artifactId>common-package</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>nurdanemin</groupId>
-            <artifactId>inventory-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
 
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

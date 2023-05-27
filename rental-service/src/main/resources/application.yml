@@ -39,3 +39,4 @@ resilience4j:
       inventory-service:
         maxAttempts: 5
         waitDuration: 15s
+
