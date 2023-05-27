@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        default-label: master
+        git:
+          uri: https://github.com/bayramnurdan/config-server-turkcell-microservices
+server:
+  port: 8888
+
+
+

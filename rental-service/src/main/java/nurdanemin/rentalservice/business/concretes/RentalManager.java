@@ -60,6 +60,7 @@ public class RentalManager implements RentalService {
         rental.setId(null);
         rental.setTotalPrice(getTotalPrice(rental));
         rental.setRentedAt(LocalDate.now());
+        // TODO : Ayrı metod oluştur.
         var paymentrequest = mapper.forResponse().map(request.getPaymentRequest(), CreateRentalPaymentRequest.class);
         paymentrequest.setPrice(getTotalPrice(rental));
         payClient.pay(paymentrequest);

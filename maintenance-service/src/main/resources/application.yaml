@@ -2,13 +2,10 @@ spring:
   application:
     name: maintenance-service
   datasource:
-    username: postgres
-    password: '12345'
-    url: jdbc:postgresql://localhost:5432/maintenancedb-dev
+    username: root
+    password: 12345
+    url: jdbc:mysql://localhost:3306/maintenancedb?createDatabaseIfNotExist=true
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
   kafka:
@@ -20,7 +17,6 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
-
 eureka:
   client:
     fetch-registry: true
@@ -28,14 +24,13 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
   instance:
-    instance-id: ${spring.application.name}:${random.value}
+    instance-id: ${spring.application.name}:${random.value}}
     prefer-ip-address: true
 server:
   port: 0
-
 resilience4j:
   retry:
     instances:
-      inventory-service:
-        maxAttempts: 5
-        waitDuration: 15s
+      retry-maintenance:
+        max-attempts: 5
+        wait-duration: 30s
