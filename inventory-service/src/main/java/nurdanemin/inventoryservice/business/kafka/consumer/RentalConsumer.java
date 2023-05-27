@@ -16,8 +16,8 @@ public class RentalConsumer {
     private final CarService service;
 
     @KafkaListener(
-            topics = "rental-created-for-invoice",
-            groupId = "rental-create-for-invoice"
+            topics = "rental-created",
+            groupId = "rental-create"
     )
     public void consume(RentalCreatedEvent event) {
         service.changeStateByCarId(State.Rented, event.getCarId());

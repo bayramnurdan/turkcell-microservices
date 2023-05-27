@@ -11,7 +11,7 @@ services:
 
   mongodb:
     platform: linux/amd64
-    container_name: turkcell2-filterdb
+    container_name: turkcell-filterdb
     image:
       mongo:4.4.6
     ports:
@@ -19,32 +19,7 @@ services:
     volumes:
       - mongodb_data:/data/db
 
-  maintenancedb:
-    container_name: maintenancedb-t2
-    image: mysql
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=12345
-      - MYSQL_TCP_PORT=3306
-      - VIRTUAL_PORT=3306
-    volumes:
-      - maintenancedb_data:/data/db
-
-  paymentdb:
-    container_name: paymentdb-t2
-    image: mysql
-    ports:
-      - "3307:3307"
-    environment:
-      - MYSQL_ROOT_PASSWORD=12345
-      - MYSQL_TCP_PORT=3307
-      - VIRTUAL_PORT=3307
-    volumes:
-      - paymentdb_data:/data/db
 
 volumes:
   kafka_data:
   mongodb_data:
-  maintenancedb_data:
-  paymentdb_data:

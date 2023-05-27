@@ -21,5 +21,4 @@ public interface RentalService {
 
     void delete(UUID id);
 
-    void sendKafkaRentalCreatedEvent(UUID carId);
 }

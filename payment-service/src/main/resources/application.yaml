@@ -2,15 +2,21 @@ spring:
   application:
     name: payment-service
   datasource:
-    username: root
-    password: 12345
-    url: jdbc:mysql://localhost:3307/paymentdb-t2?createDatabaseIfNotExist=true
+    username: postgres
+    password: '12345'
+    url: jdbc:postgresql://localhost:5432/paymentdb-dev
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
 eureka:
   client:
     fetch-registry: true
@@ -19,6 +25,13 @@ eureka:
       defaultZone: http://localhost:8761/eureka
   instance:
     instance-id: ${spring.application.name}:${random.value}
-    preferIpAddress: true
+    prefer-ip-address: true
 server:
   port: 0
+
+resilience4j:
+  retry:
+    instances:
+      inventory-service:
+        maxAttempts: 5
+        waitDuration: 15s

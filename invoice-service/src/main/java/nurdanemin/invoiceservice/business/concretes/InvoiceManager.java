@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import nurdanemin.commonpackage.events.rental.RentalCreatedForInvoiceEvent;
 import nurdanemin.commonpackage.utils.mappers.ModelMapperService;
 import nurdanemin.invoiceservice.business.abstracts.InvoiceService;
-import nurdanemin.invoiceservice.business.dto.response.CreateInvoiceResponse;
 import nurdanemin.invoiceservice.business.dto.response.GetAllInvoicesResponse;
 import nurdanemin.invoiceservice.business.dto.response.GetInvoiceResponse;
 import nurdanemin.invoiceservice.entities.Invoice;
@@ -21,11 +20,11 @@ public class InvoiceManager implements InvoiceService {
     private final InvoiceRepository repository;
 
     @Override
-    public CreateInvoiceResponse create(RentalCreatedForInvoiceEvent event) {
+    public void create(RentalCreatedForInvoiceEvent event) {
         var invoice = mapper.forRequest().map(event, Invoice.class);
-        //invoice.setId(UUID.randomUUID());
-        var savedInvoice = repository.save(invoice);
-        return mapper.forResponse().map(savedInvoice, CreateInvoiceResponse.class);
+        System.out.println(event.getBrandName().toUpperCase());
+        repository.save(invoice);
+
 
     }
 
@@ -40,5 +39,10 @@ public class InvoiceManager implements InvoiceService {
     @Override
     public GetInvoiceResponse getById(UUID id) {
         return mapper.forResponse().map(repository.findById(id).orElseThrow(), GetInvoiceResponse.class);
+    }
+
+    @Override
+    public void delete(UUID id) {
+        repository.deleteById(id);
     }
 }

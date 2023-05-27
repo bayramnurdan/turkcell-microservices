@@ -70,7 +70,7 @@ public class RentalManager implements RentalService {
         paymentrequest.setPrice(getTotalPrice(rental));
         payClient.pay(paymentrequest);
         repository.save(rental);
-        sendKafkaRentalCreatedEvent(request.getCarId());
+        producer.sendMessage(new RentalCreatedEvent(request.getCarId()), "rental-created");
         var response = mapper.forResponse().map(rental, CreateRentalResponse.class);
         var carResponse = carClient.getById(request.getCarId());
         var event = mergeRentalInfo(carResponse, request);
@@ -80,10 +80,6 @@ public class RentalManager implements RentalService {
         return response;
     }
 
-    public void sendKafkaRentalCreatedEvent(UUID carId) {
-
-        producer.sendMessage(new RentalCreatedEvent(carId), "rental-created");
-    }
 
     @Override
     public UpdateRentalResponse update(UUID id, UpdateRentalRequest request) {
