@@ -1,6 +1,12 @@
 spring:
   application:
     name: inventory-service
+    security:
+      oauth2:
+        resourceserver:
+          jwt:
+            jwk-set-uri:
+
   datasource:
     username: postgres
     password: '12345'
