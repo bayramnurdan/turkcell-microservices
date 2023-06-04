@@ -2,7 +2,7 @@ version: '3.8'
 services:
   kafka:
     platform: linux/amd64
-    container_name: kafka-t2
+    container_name: kafka-rentacar
     image: bashj79/kafka-kraft
     ports:
       - "9092:9092"

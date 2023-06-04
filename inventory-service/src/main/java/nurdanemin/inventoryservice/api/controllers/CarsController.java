@@ -11,6 +11,7 @@ import nurdanemin.inventoryservice.business.dto.responses.create.CreateCarRespon
 import nurdanemin.inventoryservice.business.dto.responses.get.GetAllCarsResponse;
 import nurdanemin.inventoryservice.business.dto.responses.update.UpdateCarResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class CarsController {
     private final CarService service;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('admin', 'user')")
     public List<GetAllCarsResponse> getAll() {
         return service.getAll();
     }
