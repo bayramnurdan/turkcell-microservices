@@ -11,6 +11,7 @@ import nurdanemin.paymentservice.business.dto.response.create.CreatePaymentRespo
 import nurdanemin.paymentservice.business.dto.response.get.GetAllPaymentsResponse;
 import nurdanemin.paymentservice.business.dto.response.get.GetPaymentResponse;
 import nurdanemin.paymentservice.business.dto.response.update.UpdatePaymentResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,31 +24,37 @@ public class PaymentsController {
     private final PaymentService service;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('admin')")
     public List<GetAllPaymentsResponse> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
+    //TODO : Post authorized ekle
     public GetPaymentResponse getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('user')")
     public CreatePaymentResponse add(@Valid @RequestBody CreatePaymentRequest request) {
         return service.add(request);
     }
 
     @PutMapping("/{id}")
+    //TODO : POST
     public UpdatePaymentResponse update(@PathVariable UUID id, @Valid @RequestBody UpdatePaymentRequest request) {
         return service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
+    //TODO: POST
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }
 
     @PostMapping("/pay")
+    // TODO: DÜŞÜN
     public ClientResponse pay(@RequestBody CreateRentalPaymentRequest request) {
         return service.processRentalPayment(request);
 

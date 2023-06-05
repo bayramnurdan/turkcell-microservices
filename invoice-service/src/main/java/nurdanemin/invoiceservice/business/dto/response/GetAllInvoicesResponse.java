@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class GetAllInvoicesResponse {
     private String id;
-    private String cardHolder;  //payment
-    private String modelName;  //openfeign
-    private String brandName;    //openfeign
+    private String cardHolder;
+    private String modelName;
+    private String brandName;
     private String plate;
     private int modelYear;
     private double dailyPrice;

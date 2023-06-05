@@ -13,7 +13,7 @@ public interface MaintenanceService {
 
     GetMaintenanceResponse getById(UUID id);
 
-    void returnCarFromMaintenance(UUID carId);
+    void returnCarFromMaintenance(UUID carId); //TODO :Tekrar düşün
 
     CreateMaintenanceResponse add(CreateMaintenanceRequest request);
 

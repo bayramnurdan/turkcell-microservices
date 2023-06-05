@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface InvoiceService {
 
-    void create(RentalCreatedForInvoiceEvent event);
+    void create(RentalCreatedForInvoiceEvent event);  //TODO: Tekrar düşün
 
     List<GetAllInvoicesResponse> getAll();
 

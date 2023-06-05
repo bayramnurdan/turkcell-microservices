@@ -24,8 +24,6 @@ public class InvoiceManager implements InvoiceService {
         var invoice = mapper.forRequest().map(event, Invoice.class);
         System.out.println(event.getBrandName().toUpperCase());
         repository.save(invoice);
-
-
     }
 
     @Override

@@ -33,20 +33,18 @@ public class CarManager implements CarService {
 
     @Override
     public List<GetAllCarsResponse> getAll() {
-        var cars = repository.findAll();  //var sağa bakıyor, sade gözükmesi için
-        var response = cars
+        var cars = repository.findAll();
+        return cars
                 .stream()
                 .map(car -> mapper.forResponse().map(car, GetAllCarsResponse.class))
                 .toList();
-        return response;
     }
 
     @Override
     public GetCarResponse getById(UUID id) {
         rules.checkIfCarExists(id);
         var car = repository.findById(id).orElseThrow();
-        var response = mapper.forResponse().map(car, GetCarResponse.class);
-        return response;
+        return mapper.forResponse().map(car, GetCarResponse.class);
     }
 
     @Override
@@ -57,9 +55,7 @@ public class CarManager implements CarService {
         var createdCar = repository.save(car);
         sendKafkaCarCreatedEvent(createdCar);
 
-
-        var response = mapper.forResponse().map(createdCar, CreateCarResponse.class);
-        return response;
+        return mapper.forResponse().map(createdCar, CreateCarResponse.class);
     }
 
     @Override
@@ -68,8 +64,7 @@ public class CarManager implements CarService {
         var car = mapper.forRequest().map(request, Car.class);
         car.setId(id);
         repository.save(car);
-        var response = mapper.forResponse().map(car, UpdateCarResponse.class);
-        return response;
+        return mapper.forResponse().map(car, UpdateCarResponse.class);
     }
 
     @Override
@@ -85,7 +80,6 @@ public class CarManager implements CarService {
         validateCarAvailability(id, response);
 
         return response;
-
     }
 
     @Override
@@ -101,7 +95,6 @@ public class CarManager implements CarService {
     }
 
     private void sendKafkaCarDeletedEvent(UUID id) {
-
         producer.sendMessage(new CarDeletedEvent(id), "car-deleted");
     }
 

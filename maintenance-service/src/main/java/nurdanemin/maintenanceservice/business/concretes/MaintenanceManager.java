@@ -31,11 +31,10 @@ public class MaintenanceManager implements MaintenanceService {
     @Override
     public List<GetAllMaintenancesResponse> getAll() {
         var maintenances = repository.findAll();
-        var response = maintenances
+        return maintenances
                 .stream()
                 .map(maintenance -> mapper.forResponse().map(maintenance, GetAllMaintenancesResponse.class))
                 .toList();
-        return response;
     }
 
     @Override

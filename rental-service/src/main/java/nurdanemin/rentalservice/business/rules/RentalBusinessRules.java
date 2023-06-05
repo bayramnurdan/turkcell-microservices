@@ -27,8 +27,6 @@ public class RentalBusinessRules {
         if (!response.isSuccess()) {
             throw new BusinessException(response.getMessage());
         }
-
-
     }
 
 }

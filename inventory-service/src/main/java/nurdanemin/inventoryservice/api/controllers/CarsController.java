@@ -24,29 +24,33 @@ public class CarsController {
     private final CarService service;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('admin', 'user')")
+    @PreAuthorize("hasAnyRole('user', 'admin')")
     public List<GetAllCarsResponse> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('user', 'admin')")
     public GetCarResponse getById(@PathVariable UUID id) {
         return service.getById(id);
 
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('admin')")
     @ResponseStatus(HttpStatus.CREATED)
     public CreateCarResponse add(@Valid @RequestBody CreateCarRequest request) {
         return service.add(request);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('admin')")
     public UpdateCarResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateCarRequest request) {
         return service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('admin')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         service.delete(id);
@@ -55,7 +59,6 @@ public class CarsController {
 
     @GetMapping("/check-car-available/{id}")
     public ClientResponse checkIfCarAvailable(@PathVariable UUID id) {
-
         return service.checkIfCarAvailable(id);
     }
 }

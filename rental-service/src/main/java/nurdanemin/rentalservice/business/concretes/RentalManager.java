@@ -41,21 +41,19 @@ public class RentalManager implements RentalService {
     @Override
     public List<GetAllRentalsResponse> getAll() {
         var rentals = repository.findAll();
-        var response = rentals
+        return rentals
                 .stream()
                 .map(rental -> mapper.forResponse().map(rental, GetAllRentalsResponse.class))
                 .toList();
 
-        return response;
     }
 
     @Override
     public GetRentalResponse getById(UUID id) {
         rules.checkIfRentalExists(id);
         var rental = repository.findById(id).orElseThrow();
-        var response = mapper.forResponse().map(rental, GetRentalResponse.class);
+        return mapper.forResponse().map(rental, GetRentalResponse.class);
 
-        return response;
     }
 
     @Override
@@ -88,7 +86,6 @@ public class RentalManager implements RentalService {
         rental.setId(id);
         repository.save(rental);
         return mapper.forResponse().map(rental, UpdateRentalResponse.class);
-
     }
 
 

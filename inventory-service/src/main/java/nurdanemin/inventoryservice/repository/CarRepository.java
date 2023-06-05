@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface CarRepository extends JpaRepository<Car, UUID> {
     @Modifying
-    @Transactional  // İŞLEM SIRASINDA HATA OLURSA İŞLEM İPTAL
+    @Transactional
     @Query(value = "update Car set state =:state where id =:id")
     void changeStateByCarId(State state, UUID id);
 }
