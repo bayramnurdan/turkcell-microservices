@@ -4,9 +4,11 @@ spring:
   cloud:
     config:
       server:
-        default-label: master
+        default-label: main
         git:
-          uri: https://github.com/bayramnurdan/config-server-turkcell-microservices
+          uri: https://github.com/bayramnurdan/config-server-turkcell
+  profiles:
+    active: dev
 server:
   port: 8888
 
