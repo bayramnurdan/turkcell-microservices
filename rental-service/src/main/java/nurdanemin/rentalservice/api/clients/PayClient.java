@@ -12,6 +12,6 @@ public interface PayClient {
 
     @PostMapping("/api/payments/pay")
     @Retry(name = "payment-service")
-    public ClientResponse pay(@RequestBody CreateRentalPaymentRequest request);
+    ClientResponse pay(@RequestBody CreateRentalPaymentRequest request);
 
 }

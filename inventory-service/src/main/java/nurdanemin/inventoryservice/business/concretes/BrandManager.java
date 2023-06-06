@@ -30,10 +30,8 @@ public class BrandManager implements BrandService {
     @Override
     public List<GetAllBrandsResponse> getAll() {
         var brands = repository.findAll();
-        var response = brands
-                .stream()
-                .map(brand -> mapper.forResponse().map(brand, GetAllBrandsResponse.class))
-                .toList();
+        var response =
+                brands.stream().map(brand -> mapper.forResponse().map(brand, GetAllBrandsResponse.class)).toList();
         return response;
 
 

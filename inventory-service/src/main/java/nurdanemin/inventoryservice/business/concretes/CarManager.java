@@ -34,10 +34,7 @@ public class CarManager implements CarService {
     @Override
     public List<GetAllCarsResponse> getAll() {
         var cars = repository.findAll();
-        return cars
-                .stream()
-                .map(car -> mapper.forResponse().map(car, GetAllCarsResponse.class))
-                .toList();
+        return cars.stream().map(car -> mapper.forResponse().map(car, GetAllCarsResponse.class)).toList();
     }
 
     @Override

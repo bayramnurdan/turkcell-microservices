@@ -20,18 +20,14 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class ModelManager implements ModelService {
-    private ModelRepository repository;
     private final ModelMapperService mapper;
     private final ModelBusinessRules rules;
-
+    private ModelRepository repository;
 
     @Override
     public List<GetAllModelsResponse> getAll() {
         var models = repository.findAll();
-        return models
-                .stream()
-                .map(model -> mapper.forResponse().map(model, GetAllModelsResponse.class))
-                .toList();
+        return models.stream().map(model -> mapper.forResponse().map(model, GetAllModelsResponse.class)).toList();
     }
 
     @Override

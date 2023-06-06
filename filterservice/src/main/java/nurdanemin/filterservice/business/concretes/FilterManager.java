@@ -21,10 +21,8 @@ public class FilterManager implements FilterService {
     @Override
     public List<GetAllFiltersResponse> getAll() {
         var filters = repository.findAll();
-        var response = filters
-                .stream()
-                .map(filter -> mapper.forResponse().map(filter, GetAllFiltersResponse.class))
-                .toList();
+        var response =
+                filters.stream().map(filter -> mapper.forResponse().map(filter, GetAllFiltersResponse.class)).toList();
 
         return response;
     }

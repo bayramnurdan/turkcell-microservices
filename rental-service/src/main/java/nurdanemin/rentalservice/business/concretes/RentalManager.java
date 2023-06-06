@@ -6,7 +6,6 @@ import nurdanemin.commonpackage.events.rental.RentalCreatedForInvoiceEvent;
 import nurdanemin.commonpackage.events.rental.RentalDeletedEvent;
 import nurdanemin.commonpackage.kafka.producer.KafkaProducer;
 import nurdanemin.commonpackage.utils.dto.CreateRentalPaymentRequest;
-import nurdanemin.commonpackage.utils.dto.GetCarResponse;
 import nurdanemin.commonpackage.utils.mappers.ModelMapperService;
 import nurdanemin.rentalservice.api.clients.CarClient;
 import nurdanemin.rentalservice.api.clients.PayClient;
@@ -41,11 +40,7 @@ public class RentalManager implements RentalService {
     @Override
     public List<GetAllRentalsResponse> getAll() {
         var rentals = repository.findAll();
-        return rentals
-                .stream()
-                .map(rental -> mapper.forResponse().map(rental, GetAllRentalsResponse.class))
-                .toList();
-
+        return rentals.stream().map(rental -> mapper.forResponse().map(rental, GetAllRentalsResponse.class)).toList();
     }
 
     @Override
@@ -53,25 +48,29 @@ public class RentalManager implements RentalService {
         rules.checkIfRentalExists(id);
         var rental = repository.findById(id).orElseThrow();
         return mapper.forResponse().map(rental, GetRentalResponse.class);
-
     }
 
     @Override
     public CreateRentalResponse add(CreateRentalRequest request) {
+        //TODO : hala yapılacak şeyler var
         rules.ensureCarIsAvailable(request.getCarId());
+
         var rental = mapper.forRequest().map(request, Rental.class);
         rental.setId(null);
         rental.setTotalPrice(getTotalPrice(rental));
         rental.setRentedAt(LocalDate.now());
-        // TODO : Ayrı metod oluştur.
+
         var paymentrequest = mapper.forResponse().map(request.getPaymentRequest(), CreateRentalPaymentRequest.class);
         paymentrequest.setPrice(getTotalPrice(rental));
         payClient.pay(paymentrequest);
+
         repository.save(rental);
+
         producer.sendMessage(new RentalCreatedEvent(request.getCarId()), "rental-created");
+
         var response = mapper.forResponse().map(rental, CreateRentalResponse.class);
-        var carResponse = carClient.getById(request.getCarId());
-        var event = mergeRentalInfo(carResponse, request);
+
+        var event = createRentalCreatedForInvoiceEvent(request.getCarId(), request);
         producer.sendMessage(event, "rental-created-for-invoice");
 
 
@@ -105,7 +104,9 @@ public class RentalManager implements RentalService {
         producer.sendMessage(new RentalDeletedEvent(carId), "rental-deleted");
     }
 
-    private RentalCreatedForInvoiceEvent mergeRentalInfo(GetCarResponse carResponse, CreateRentalRequest request) {
+    private RentalCreatedForInvoiceEvent createRentalCreatedForInvoiceEvent(UUID carId, CreateRentalRequest request) {
+        var carResponse = carClient.getById(request.getCarId());
+
         RentalCreatedForInvoiceEvent event = new RentalCreatedForInvoiceEvent();
         event.setBrandName(carResponse.getModelBrandName());
         event.setPlate(carResponse.getPlate());

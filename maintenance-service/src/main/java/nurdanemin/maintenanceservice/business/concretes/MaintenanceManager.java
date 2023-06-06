@@ -31,10 +31,8 @@ public class MaintenanceManager implements MaintenanceService {
     @Override
     public List<GetAllMaintenancesResponse> getAll() {
         var maintenances = repository.findAll();
-        return maintenances
-                .stream()
-                .map(maintenance -> mapper.forResponse().map(maintenance, GetAllMaintenancesResponse.class))
-                .toList();
+        return maintenances.stream().map(maintenance -> mapper.forResponse().map(maintenance,
+                                                                                 GetAllMaintenancesResponse.class)).toList();
     }
 
     @Override

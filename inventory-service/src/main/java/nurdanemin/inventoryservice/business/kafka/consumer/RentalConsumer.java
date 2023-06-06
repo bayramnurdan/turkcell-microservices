@@ -15,21 +15,15 @@ import org.springframework.stereotype.Service;
 public class RentalConsumer {
     private final CarService service;
 
-    @KafkaListener(
-            topics = "rental-created",
-            groupId = "rental-create"
-    )
+    @KafkaListener(topics = "rental-created", groupId = "rental-create")
     public void consume(RentalCreatedEvent event) {
-        service.changeStateByCarId(State.Rented, event.getCarId());
+        service.changeStateByCarId(State.RENTED, event.getCarId());
         log.info("Rental created event consumed {}", event);
     }
 
-    @KafkaListener(
-            topics = "rental-deleted",
-            groupId = "inventory-rental-delete"
-    )
+    @KafkaListener(topics = "rental-deleted", groupId = "inventory-rental-delete")
     public void consume(RentalDeletedEvent event) {
-        service.changeStateByCarId(State.Available, event.getCarId());
+        service.changeStateByCarId(State.AVAILABLE, event.getCarId());
         log.info("Rental deleted event consumed {}", event);
     }
 }

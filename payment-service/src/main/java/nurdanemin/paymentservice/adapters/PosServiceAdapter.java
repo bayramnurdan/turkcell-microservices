@@ -11,7 +11,8 @@ public class PosServiceAdapter implements PosService {
     @Override
     public void pay() {
         boolean isPaymentSuccessful = new Random().nextBoolean();
-        if (!isPaymentSuccessful) throw new BusinessException(Messages.Payment.Failed);
+        if (!isPaymentSuccessful)
+            throw new BusinessException(Messages.Payment.Failed);
 
     }
 }

@@ -33,13 +33,7 @@ public class PaymentBusinessRules {
     }
 
     public void checkIfPaymentIsValid(CreateRentalPaymentRequest request) {
-        if (!repository.existsByCardNumberAndCardHolderAndCardExpirationYearAndCardExpirationMonthAndCardCvv(
-                request.getCardNumber(),
-                request.getCardHolder(),
-                request.getCardExpirationYear(),
-                request.getCardExpirationMonth(),
-                request.getCardCvv()
-        )) {
+        if (!repository.existsByCardNumberAndCardHolderAndCardExpirationYearAndCardExpirationMonthAndCardCvv(request.getCardNumber(), request.getCardHolder(), request.getCardExpirationYear(), request.getCardExpirationMonth(), request.getCardCvv())) {
             throw new BusinessException(Messages.Payment.NotAValidPayment);
         }
     }

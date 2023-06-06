@@ -11,9 +11,8 @@ public class ModelMapperManager implements ModelMapperService {
 
     @Override
     public ModelMapper forResponse() {
-        mapper.getConfiguration()
-                .setAmbiguityIgnored(true)
-                .setMatchingStrategy(MatchingStrategies.LOOSE); //standard kullandığımız
+        mapper.getConfiguration().setAmbiguityIgnored(true).setMatchingStrategy(MatchingStrategies.LOOSE); //standard
+        // kullandığımız
         return mapper;
         // sıkı olsa bizden obje createrequestler için id gerektirir
 
@@ -21,9 +20,8 @@ public class ModelMapperManager implements ModelMapperService {
 
     @Override
     public ModelMapper forRequest() {
-        mapper.getConfiguration()
-                .setAmbiguityIgnored(true)
-                .setMatchingStrategy(MatchingStrategies.LOOSE); //standard kullandığımız
+        mapper.getConfiguration().setAmbiguityIgnored(true).setMatchingStrategy(MatchingStrategies.LOOSE); //standard
+        // kullandığımız
         return mapper;
     }
 }

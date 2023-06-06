@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 public class RentalConsumer {
     private final InvoiceService service;
 
-    @KafkaListener(
-            topics = "rental-created-for-invoice",
-            groupId = "rental-create-for-invoice"
-    )
+    @KafkaListener(topics = "rental-created-for-invoice", groupId = "rental-create-for-invoice")
     public void consume(RentalCreatedForInvoiceEvent event) {
         service.create(event);
         log.info("Rental created for invoice event consumed {}", event);

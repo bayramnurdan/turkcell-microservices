@@ -1,11 +1,8 @@
 spring:
   application:
-    name: discovery-server
+    name: api-gateway
   cloud:
     config:
       profile: dev
   config:
     import: optional:configserver:http://localhost:8888
-
-
-

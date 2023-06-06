@@ -16,21 +16,15 @@ public class MaintenanceConsumer {
 
     private final CarService service;
 
-    @KafkaListener(
-            topics = "return-maintenance",
-            groupId = "return-maintenanced"
-    )
+    @KafkaListener(topics = "return-maintenance", groupId = "return-maintenanced")
     public void consume(ReturnMaintenanceEvent event) {
-        service.changeStateByCarId(State.Available, event.getCarId());
+        service.changeStateByCarId(State.AVAILABLE, event.getCarId());
         log.info("Maintenance returned event consumed {}", event);
     }
 
-    @KafkaListener(
-            topics = "maintenance-created",
-            groupId = "maintenance-create"
-    )
+    @KafkaListener(topics = "maintenance-created", groupId = "maintenance-create")
     public void consume(CreateMaintenanceEvent event) {
-        service.changeStateByCarId(State.Maintenance, event.getCarId());
+        service.changeStateByCarId(State.UNDER_MAINTENANCE, event.getCarId());
         log.info("Maintenance created event consumed {}", event);
     }
 

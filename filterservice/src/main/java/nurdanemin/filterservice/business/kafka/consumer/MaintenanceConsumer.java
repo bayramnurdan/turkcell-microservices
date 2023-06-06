@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 public class MaintenanceConsumer {
     private final FilterService service;
 
-    @KafkaListener(
-            topics = "maintenance-created",
-            groupId = "filter-maintenance-create"
-    )
+    @KafkaListener(topics = "maintenance-created", groupId = "filter-maintenance-create")
     public void consume(CreateMaintenanceEvent event) {
         Filter filter = service.getByCarId(event.getCarId());
         filter.setState("Maintenance");
@@ -27,10 +24,7 @@ public class MaintenanceConsumer {
     }
 
 
-    @KafkaListener(
-            topics = "return-maintenance",
-            groupId = "filter-maintenance-return"
-    )
+    @KafkaListener(topics = "return-maintenance", groupId = "filter-maintenance-return")
     public void consume(ReturnMaintenanceEvent event) {
         var filter = service.getByCarId(event.getCarId());
         filter.setState("Available");

@@ -21,8 +21,9 @@ public class Rental {
     private UUID id;
     private UUID carId;
     private double dailyPrice;
-    private double totalPrice;
     private int rentedForDays;
+
+    private double totalPrice;
     private LocalDate rentedAt;
 
 

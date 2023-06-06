@@ -16,19 +16,9 @@ public class SecurityConfig {
         var converter = new JwtAuthenticationConverter();
         converter.setJwtGrantedAuthoritiesConverter(new KeycloakJwtRoleConverter());
 
-        http.cors().and().authorizeHttpRequests()
-                .requestMatchers("/api/filters", "api/cars/check-car-available/**",
-                        "api/payments/check"
-                ).permitAll()
-                .requestMatchers("/api/**")
-                .hasAnyRole("user")
-                .anyRequest()
-                .authenticated()
-                .and()
-                .csrf().disable()
-                .oauth2ResourceServer()
-                .jwt()
-                .jwtAuthenticationConverter(converter);
+        http.cors().and().authorizeHttpRequests().requestMatchers("/api/filters", "api/cars/check-car-available/**",
+                                                                  "api/payments/check").permitAll().requestMatchers(
+                                                                          "/api/**").hasAnyRole("user").anyRequest().authenticated().and().csrf().disable().oauth2ResourceServer().jwt().jwtAuthenticationConverter(converter);
         return http.build();
     }
 }

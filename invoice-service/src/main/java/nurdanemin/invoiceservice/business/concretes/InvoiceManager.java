@@ -28,10 +28,8 @@ public class InvoiceManager implements InvoiceService {
 
     @Override
     public List<GetAllInvoicesResponse> getAll() {
-        return repository.findAll()
-                .stream()
-                .map(invoice -> mapper.forResponse().map(invoice, GetAllInvoicesResponse.class))
-                .toList();
+        return repository.findAll().stream().map(invoice -> mapper.forResponse().map(invoice,
+                                                                                     GetAllInvoicesResponse.class)).toList();
     }
 
     @Override
