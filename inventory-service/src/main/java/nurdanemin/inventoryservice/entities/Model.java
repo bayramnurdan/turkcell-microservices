@@ -19,6 +19,7 @@ public class Model {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;

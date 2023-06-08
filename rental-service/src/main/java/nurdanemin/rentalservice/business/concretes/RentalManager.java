@@ -54,26 +54,18 @@ public class RentalManager implements RentalService {
     public CreateRentalResponse add(CreateRentalRequest request) {
         //TODO : hala yapılacak şeyler var
         rules.ensureCarIsAvailable(request.getCarId());
-
         var rental = mapper.forRequest().map(request, Rental.class);
         rental.setId(null);
         rental.setTotalPrice(getTotalPrice(rental));
         rental.setRentedAt(LocalDate.now());
-
         var paymentrequest = mapper.forResponse().map(request.getPaymentRequest(), CreateRentalPaymentRequest.class);
         paymentrequest.setPrice(getTotalPrice(rental));
         payClient.pay(paymentrequest);
-
         repository.save(rental);
-
         producer.sendMessage(new RentalCreatedEvent(request.getCarId()), "rental-created");
-
         var response = mapper.forResponse().map(rental, CreateRentalResponse.class);
-
         var event = createRentalCreatedForInvoiceEvent(request.getCarId(), request);
         producer.sendMessage(event, "rental-created-for-invoice");
-
-
         return response;
     }
 
@@ -106,7 +98,6 @@ public class RentalManager implements RentalService {
 
     private RentalCreatedForInvoiceEvent createRentalCreatedForInvoiceEvent(UUID carId, CreateRentalRequest request) {
         var carResponse = carClient.getById(request.getCarId());
-
         RentalCreatedForInvoiceEvent event = new RentalCreatedForInvoiceEvent();
         event.setBrandName(carResponse.getModelBrandName());
         event.setPlate(carResponse.getPlate());

@@ -1,6 +1,7 @@
 package nurdanemin.inventoryservice.business.rules;
 
 import lombok.AllArgsConstructor;
+import nurdanemin.commonpackage.utils.constants.Messages;
 import nurdanemin.commonpackage.utils.exceptions.BusinessException;
 import nurdanemin.inventoryservice.repository.BrandRepository;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class BrandBusinessRules {
 
     public void checkIfBrandExists(UUID id) {
         if (!repository.existsById(id)) {
-            throw new BusinessException("BRAND_NOT_EXISTS");
+            throw new BusinessException(Messages.Brand.NotExists);
         }
     }
 

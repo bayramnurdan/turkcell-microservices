@@ -73,7 +73,6 @@ public class BrandManager implements BrandService {
     }
 
     private void sendKafkaBrandDeletedEvent(UUID id) {
-
         producer.sendMessage(new BrandDeletedEvent(id), "brand-deleted");
     }
 }

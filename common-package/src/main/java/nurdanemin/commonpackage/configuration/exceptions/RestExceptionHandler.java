@@ -24,7 +24,6 @@ public class RestExceptionHandler {
         for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
             validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
-
         return new ExceptionResult<>(ExceptionTypes.Exception.Validation, validationErrors);
     }
 

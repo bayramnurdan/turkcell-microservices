@@ -1,6 +1,7 @@
 package nurdanemin.inventoryservice.business.rules;
 
 import lombok.AllArgsConstructor;
+import nurdanemin.commonpackage.utils.constants.Messages;
 import nurdanemin.commonpackage.utils.exceptions.BusinessException;
 import nurdanemin.inventoryservice.repository.ModelRepository;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,7 @@ public class ModelBusinessRules {
 
     public void checkIfModelExists(UUID id) {
         if (!repository.existsById(id)) {
-            throw new BusinessException("MODEL_NOT_EXISTS");
-            //TODO :EXCEPTIONLAR İÇİN CONSTANT BELİRLEYEBİLİRİZ
+            throw new BusinessException(Messages.Model.NotExists);
         }
     }
 }

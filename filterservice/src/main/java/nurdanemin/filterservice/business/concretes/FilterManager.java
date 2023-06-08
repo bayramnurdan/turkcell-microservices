@@ -23,7 +23,6 @@ public class FilterManager implements FilterService {
         var filters = repository.findAll();
         var response =
                 filters.stream().map(filter -> mapper.forResponse().map(filter, GetAllFiltersResponse.class)).toList();
-
         return response;
     }
 
@@ -31,19 +30,16 @@ public class FilterManager implements FilterService {
     public GetFilterResponse getById(UUID id) {
         var filter = repository.findById(id).orElseThrow();
         var response = mapper.forResponse().map(filter, GetFilterResponse.class);
-
         return response;
     }
 
     @Override
     public void add(Filter filter) {
-
         repository.save(filter);
     }
 
     @Override
     public void delete(UUID id) {
-
         repository.deleteById(id);
     }
 

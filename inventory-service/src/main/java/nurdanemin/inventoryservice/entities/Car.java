@@ -21,6 +21,7 @@ public class Car {
     private UUID id;
     private int modelYear;
     private String plate;
+    
     @Enumerated(EnumType.STRING)
     private State state;
     private double dailyPrice;

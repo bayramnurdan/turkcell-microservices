@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class MaintenanceConsumer {
-
     private final CarService service;
 
     @KafkaListener(topics = "return-maintenance", groupId = "return-maintenanced")

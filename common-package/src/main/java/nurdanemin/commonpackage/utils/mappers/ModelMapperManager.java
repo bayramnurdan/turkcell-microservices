@@ -15,7 +15,6 @@ public class ModelMapperManager implements ModelMapperService {
         // kullandığımız
         return mapper;
         // sıkı olsa bizden obje createrequestler için id gerektirir
-
     }
 
     @Override

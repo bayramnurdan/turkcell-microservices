@@ -32,7 +32,6 @@ public class ModelsController {
     @PreAuthorize("hasAnyRole('user', 'admin')")
     public GetModelResponse getById(@PathVariable UUID id) {
         return service.getById(id);
-
     }
 
     @PostMapping

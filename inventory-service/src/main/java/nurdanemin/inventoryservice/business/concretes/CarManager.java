@@ -48,10 +48,9 @@ public class CarManager implements CarService {
     public CreateCarResponse add(CreateCarRequest request) {
         var car = mapper.forRequest().map(request, Car.class);
         car.setId(UUID.randomUUID());
-        car.setState(State.Available);
+        car.setState(State.AVAILABLE);
         var createdCar = repository.save(car);
         sendKafkaCarCreatedEvent(createdCar);
-
         return mapper.forResponse().map(createdCar, CreateCarResponse.class);
     }
 
@@ -75,7 +74,6 @@ public class CarManager implements CarService {
     public ClientResponse checkIfCarAvailable(UUID id) {
         var response = new ClientResponse();
         validateCarAvailability(id, response);
-
         return response;
     }
 
