@@ -20,9 +20,9 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class ModelManager implements ModelService {
-    private final ModelMapperService mapper;
     private final ModelBusinessRules rules;
     private ModelRepository repository;
+    private final ModelMapperService mapper;
 
     @Override
     public List<GetAllModelsResponse> getAll() {

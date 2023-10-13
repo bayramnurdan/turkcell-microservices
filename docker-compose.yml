@@ -21,6 +21,11 @@ services:
     volumes:
       - .:/opt/jboss/keycloak/imports
 
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin-rentacar
+    ports: "9411"
+
   mongodb:
     platform: linux/amd64
     container_name: turkcell-filterdb

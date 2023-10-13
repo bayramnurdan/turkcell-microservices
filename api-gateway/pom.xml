@@ -49,6 +49,11 @@
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-observation</artifactId>
+            <version>1.11.0</version>
+        </dependency>
 
     </dependencies>
     <dependencyManagement>

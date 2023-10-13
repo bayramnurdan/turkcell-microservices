@@ -11,16 +11,13 @@ public class ModelMapperManager implements ModelMapperService {
 
     @Override
     public ModelMapper forResponse() {
-        mapper.getConfiguration().setAmbiguityIgnored(true).setMatchingStrategy(MatchingStrategies.LOOSE); //standard
-        // kullandığımız
+        mapper.getConfiguration().setAmbiguityIgnored(true).setMatchingStrategy(MatchingStrategies.LOOSE);
         return mapper;
-        // sıkı olsa bizden obje createrequestler için id gerektirir
     }
 
     @Override
     public ModelMapper forRequest() {
-        mapper.getConfiguration().setAmbiguityIgnored(true).setMatchingStrategy(MatchingStrategies.LOOSE); //standard
-        // kullandığımız
+        mapper.getConfiguration().setAmbiguityIgnored(true).setMatchingStrategy(MatchingStrategies.LOOSE);
         return mapper;
     }
 }

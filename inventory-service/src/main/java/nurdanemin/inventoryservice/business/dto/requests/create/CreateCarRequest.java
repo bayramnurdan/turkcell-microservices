@@ -26,7 +26,7 @@ public class CreateCarRequest {
 
 
     @NotBlank
-    @Pattern(regexp = Regex.Plate)
+    @Pattern(regexp = Regex.PLATE)
     private String plate;
 
     @Min(value = 1)

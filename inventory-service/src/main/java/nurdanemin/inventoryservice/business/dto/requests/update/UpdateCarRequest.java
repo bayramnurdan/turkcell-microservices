@@ -28,7 +28,7 @@ public class UpdateCarRequest {
     private int modelYear;
 
     @NotNull
-    @Pattern(regexp = Regex.Plate)
+    @Pattern(regexp = Regex.PLATE)
     private String plate;
     @NotNull
     private State state;

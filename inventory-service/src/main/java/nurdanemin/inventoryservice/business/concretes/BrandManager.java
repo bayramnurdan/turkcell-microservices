@@ -22,8 +22,8 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class BrandManager implements BrandService {
-    private final BrandRepository repository;
     private final BrandBusinessRules rules;
+    private final BrandRepository repository;
     private final ModelMapperService mapper;
     private final KafkaProducer producer;
 

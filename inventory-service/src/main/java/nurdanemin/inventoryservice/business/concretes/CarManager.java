@@ -26,10 +26,11 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class CarManager implements CarService {
+    private final CarBusinessRules rules;
     private final CarRepository repository;
     private final ModelMapperService mapper;
     private final KafkaProducer producer;
-    private final CarBusinessRules rules;
+
 
     @Override
     public List<GetAllCarsResponse> getAll() {
